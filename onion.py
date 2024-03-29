@@ -5,7 +5,7 @@ import random
 from reportlab.pdfgen import canvas
 from PIL import Image
 
-
+# bot link: https://t.me/i_am_onion_bot
 
 Token = "6553751419:AAFdCcZavXz7VJmGoMHE4lFNrl_Cyirq9Uk"
 bot=telebot.TeleBot(Token)
