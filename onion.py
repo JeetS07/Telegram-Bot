@@ -7,7 +7,7 @@ from PIL import Image
 
 # bot link: https://t.me/i_am_onion_bot
 
-Token = "6553751419:AAFdCcZavXz7VJmGoMHE4lFNrl_Cyirq9Uk"
+Token = ""  # place your bot token here
 bot=telebot.TeleBot(Token)
 
 @bot.message_handler(commands=['start'])
