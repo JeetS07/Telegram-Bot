@@ -10,7 +10,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
-Token = "6553751419:AAFdCcZavXz7VJmGoMHE4lFNrl_Cyirq9Uk"
+Token = ""
 bot = telebot.TeleBot(Token)
 save_path="NULL"
 
