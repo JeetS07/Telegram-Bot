@@ -1,4 +1,4 @@
-# Image-to-Pdf-Converter-Telegram-Bot
+# Student Bot
 <a href="https://t.me/i_am_onion_bot">Bot Link<a>
 <ul>
 <h3>
