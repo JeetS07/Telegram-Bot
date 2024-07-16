@@ -5,19 +5,25 @@ import random
 from reportlab.pdfgen import canvas
 from PIL import Image
 import pytesseract 
+import google.generativeai as genai
 
-# Set the path to the Tesseract executable
+# Path to the Tesseract executable
+# Download tool: https://github.com/UB-Mannheim/tesseract/wiki
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
 
 Token = ""
 bot = telebot.TeleBot(Token)
+
+gemini_api=""
+genai.configure(api_key=gemini_api)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 save_path="NULL"
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, "Hello, I am Onion Bot, created by Jeet. Send me any image document 🧅")
+    bot.send_message(message.chat.id, "Hello, I am Onion Bot, created by Jeet. Send me any image as document 🧅")
 
 
 @bot.message_handler(content_types=['document'])
@@ -40,6 +46,7 @@ def handle_document(message):
 @bot.message_handler(commands=['convert_to_pdf'])
 # Send a message to the user confirming that the document was received
 def convert_to_pdf(message):
+    global save_path
     if save_path=='NULL':
         bot.send_message(message.chat.id, 'Please send an image document to proceed')
         return
@@ -48,18 +55,32 @@ def convert_to_pdf(message):
     # Send the PDF file
     with open(res + '.pdf', 'rb') as file:
         bot.send_document(message.chat.id, file)
+    os.remove(save_path)
+    os.remove(res+'.pdf')
+    save_path='NULL'
     # bot.send_message(message.chat.id, 'Thanks for using me 😊')
 
 
 @bot.message_handler(commands=['scan'])
 def scan(message):
+    global save_path
     if save_path=='NULL':
         bot.send_message(message.chat.id, 'Please send an image document to proceed')
         return
     # Extract text from the image
     extracted_text = extract_text_from_image(save_path)
     # Send the extracted text
-    bot.send_message(message.chat.id, f'Extracted text:\n{extracted_text}')
+    bot.send_message(message.chat.id, f'{extracted_text}')
+    os.remove(save_path)    
+    save_path='NULL'
+
+
+@bot.message_handler(content_types=['text'])
+def generate_content(message):
+    user_text=message.text
+    # generating response
+    response = model.generate_content(user_text+'in short')
+    bot.send_message(message.chat.id, f'{response.text}')
 
 
 def image_to_pdf(input_image, output_pdf):
