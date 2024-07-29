@@ -14,7 +14,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 Token = ""
 bot = telebot.TeleBot(Token)
 
-gemini_api=""
+gemini_api=''
 genai.configure(api_key=gemini_api)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -23,7 +23,7 @@ save_path="NULL"
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, "Hello, I am Onion Bot, created by Jeet. Send me any image as document 🧅")
+    bot.send_message(message.chat.id, "Hello, I am Student Bot. How may I help you today? 🤖")
 
 
 @bot.message_handler(content_types=['document'])
